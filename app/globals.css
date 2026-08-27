@@ -1,26 +1,262 @@
 @import "tailwindcss";
 
+/* =========================
+   VARIABLES GENERALES
+   ========================= */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f4f6f8;
+  --surface: #ffffff;
+
+  --foreground: #1f2937;
+  --foreground-secondary: #6b7280;
+
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+
+  --success: #16a34a;
+  --warning: #d97706;
+  --danger: #dc2626;
+
+  --border: #e5e7eb;
+  --border-focus: #2563eb;
+
+  --radius: 10px;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --font-sans: Arial, Helvetica, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+
+/* =========================
+   BASE
+   ========================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--background);
 }
 
 body {
+  margin: 0;
+  min-height: 100vh;
+
   background: var(--background);
   color: var(--foreground);
+
   font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+
+  -webkit-font-smoothing: antialiased;
+}
+
+
+/* =========================
+   TEXTOS
+   ========================= */
+
+h1,
+h2,
+h3,
+h4 {
+  color: #111827;
+  font-weight: 700;
+}
+
+h1 {
+  letter-spacing: -0.025em;
+}
+
+p {
+  color: var(--foreground-secondary);
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--primary-hover);
+}
+
+
+/* =========================
+   FORMULARIOS
+   ========================= */
+
+input,
+select,
+textarea {
+  width: 100%;
+
+  background: #ffffff;
+  color: #111827;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  padding: 10px 12px;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #9ca3af;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: #9ca3af;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--border-focus);
+
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+input:disabled {
+  background: #f3f4f6;
+  color: #6b7280;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================
+   BOTONES
+   ========================= */
+
+button {
+  font-family: inherit;
+  font-weight: 500;
+
+  border: none;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+button:hover {
+  opacity: 0.92;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+button:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.25);
+  outline-offset: 2px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+
+/* =========================
+   TABLAS
+   ========================= */
+
+table {
+  width: 100%;
+
+  background: #ffffff;
+
+  border-collapse: collapse;
+
+  color: #1f2937;
+}
+
+thead {
+  background: #f9fafb;
+}
+
+th {
+  color: #374151;
+
+  font-weight: 600;
+  font-size: 14px;
+
+  text-align: left;
+}
+
+td {
+  color: #374151;
+}
+
+th,
+td {
+  border-bottom: 1px solid var(--border);
+}
+
+tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+tbody tr:hover {
+  background: #f9fafb;
+}
+
+
+/* =========================
+   SELECCIÓN
+   ========================= */
+
+::selection {
+  background: #bfdbfe;
+  color: #1e3a8a;
+}
+
+
+/* =========================
+   SCROLLBAR
+   ========================= */
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f3f4f6;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
