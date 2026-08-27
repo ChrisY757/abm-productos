@@ -28,12 +28,12 @@ export default function RootLayout({
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-screen bg-slate-50 text-slate-800 flex flex-col font-sans">
+      <body className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
         <Navbar />
-        <div className="flex-1 max-w-6xl w-full mx-auto p-4 sm:p-6">
+        <div className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
           {children}
         </div>
-        <footer className="bg-white border-t border-slate-200 py-4 text-center text-sm text-slate-500">
+        <footer className="bg-white border-t border-slate-200 py-5 text-center text-sm sm:text-base font-medium text-slate-600">
           Facultad Politécnica - UNA | Programación Web Frontend
         </footer>
       </body>

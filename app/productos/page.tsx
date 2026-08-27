@@ -183,15 +183,19 @@ export default function ProductosPage() {
   }
 
   return (
-    <main className="space-y-8 py-4">
-      {/* Título de la sección */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-slate-200 pb-4">
+    <main className="space-y-8 py-2 w-full">
+      {/* Título principal de la sección */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-slate-200 pb-5">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
             Gestión de Productos
           </h1>
-          <p className="text-sm text-slate-500">
-            ABM conectado a la API REST (<code className="text-xs bg-slate-100 px-1 py-0.5 rounded">http://localhost:4001/productos</code>)
+          <p className="text-base text-slate-600 mt-1">
+            ABM conectado en tiempo real a la API REST (
+            <code className="text-sm font-semibold bg-slate-100 text-slate-800 px-2 py-0.5 rounded border border-slate-200">
+              http://localhost:4001/productos
+            </code>
+            )
           </p>
         </div>
       </div>
@@ -199,10 +203,10 @@ export default function ProductosPage() {
       {/* Alertas de Notificación */}
       {mensaje && (
         <div
-          className={`p-4 rounded-lg text-sm font-medium border transition-all ${
+          className={`p-5 rounded-xl text-base font-semibold border shadow-sm transition-all ${
             mensaje.tipo === "exito"
-              ? "bg-emerald-50 text-emerald-800 border-emerald-200"
-              : "bg-rose-50 text-rose-800 border-rose-200"
+              ? "bg-emerald-50 text-emerald-900 border-emerald-300"
+              : "bg-rose-50 text-rose-900 border-rose-300"
           }`}
         >
           {mensaje.tipo === "exito" ? "✓ " : "⚠ "} {mensaje.texto}
@@ -210,12 +214,12 @@ export default function ProductosPage() {
       )}
 
       {/* Formulario Reutilizable para Alta (POST) y Modificación (PUT) */}
-      <section className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+      <section className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-md">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
+          <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 flex items-center gap-3">
             <span>{editando ? "✏️ Modificar Producto" : "➕ Alta de Nuevo Producto"}</span>
             {editando && (
-              <span className="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-normal">
+              <span className="text-xs bg-amber-100 text-amber-900 border border-amber-300 px-3 py-1 rounded-full font-bold uppercase tracking-wider">
                 Modo Edición
               </span>
             )}
@@ -224,16 +228,16 @@ export default function ProductosPage() {
             <button
               type="button"
               onClick={cancelarEdicion}
-              className="text-xs text-slate-500 hover:text-slate-700 underline cursor-pointer"
+              className="text-sm font-semibold text-slate-600 hover:text-slate-900 underline cursor-pointer self-start sm:self-auto"
             >
               Cancelar edición
             </button>
           )}
         </div>
 
-        <form onSubmit={guardar} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <form onSubmit={guardar} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">
+            <label className="block text-sm font-bold text-slate-700 mb-1.5">
               Código *
             </label>
             <input
@@ -243,18 +247,20 @@ export default function ProductosPage() {
               value={form.codigo}
               onChange={manejarCambio}
               disabled={editando}
-              className={`w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
-                editando ? "bg-slate-100 text-slate-500 cursor-not-allowed border-slate-200" : "bg-white border-slate-300"
+              className={`w-full px-4 py-2.5 text-base border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium ${
+                editando
+                  ? "bg-slate-100 text-slate-500 cursor-not-allowed border-slate-200"
+                  : "bg-white border-slate-300 text-slate-900 shadow-xs"
               }`}
               required
             />
             {editando && (
-              <span className="text-[10px] text-slate-400">El código no es modificable</span>
+              <span className="text-xs text-slate-400 mt-1 block font-medium">El código no es modificable</span>
             )}
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">
+            <label className="block text-sm font-bold text-slate-700 mb-1.5">
               Nombre *
             </label>
             <input
@@ -263,13 +269,13 @@ export default function ProductosPage() {
               placeholder="Ej: Auriculares Bluetooth"
               value={form.nombre}
               onChange={manejarCambio}
-              className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
+              className="w-full px-4 py-2.5 text-base border border-slate-300 text-slate-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white font-medium shadow-xs"
               required
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">
+            <label className="block text-sm font-bold text-slate-700 mb-1.5">
               Categoría *
             </label>
             <input
@@ -278,13 +284,13 @@ export default function ProductosPage() {
               placeholder="Ej: Audio, Perifericos"
               value={form.categoria}
               onChange={manejarCambio}
-              className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
+              className="w-full px-4 py-2.5 text-base border border-slate-300 text-slate-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white font-medium shadow-xs"
               required
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">
+            <label className="block text-sm font-bold text-slate-700 mb-1.5">
               Precio (Gs.) *
             </label>
             <input
@@ -294,13 +300,13 @@ export default function ProductosPage() {
               min="0"
               value={form.precio}
               onChange={manejarCambio}
-              className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
+              className="w-full px-4 py-2.5 text-base border border-slate-300 text-slate-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white font-medium shadow-xs"
               required
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-600 mb-1">
+            <label className="block text-sm font-bold text-slate-700 mb-1.5">
               Stock *
             </label>
             <input
@@ -310,24 +316,24 @@ export default function ProductosPage() {
               min="0"
               value={form.stock}
               onChange={manejarCambio}
-              className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
+              className="w-full px-4 py-2.5 text-base border border-slate-300 text-slate-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white font-medium shadow-xs"
               required
             />
           </div>
 
-          <div className="sm:col-span-2 md:col-span-3 lg:col-span-5 flex items-center justify-end gap-3 pt-2">
+          <div className="sm:col-span-2 md:col-span-3 lg:col-span-5 flex items-center justify-end gap-4 pt-3 border-t border-slate-100">
             {editando && (
               <button
                 type="button"
                 onClick={cancelarEdicion}
-                className="px-4 py-2 text-sm font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors cursor-pointer"
+                className="px-6 py-3 text-base font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors cursor-pointer"
               >
                 Cancelar
               </button>
             )}
             <button
               type="submit"
-              className={`px-5 py-2 text-sm font-medium text-white rounded-lg transition-colors shadow-sm cursor-pointer ${
+              className={`px-7 py-3 text-base font-extrabold text-white rounded-xl transition-all shadow-md hover:shadow-lg cursor-pointer ${
                 editando
                   ? "bg-amber-600 hover:bg-amber-700"
                   : "bg-indigo-600 hover:bg-indigo-700"
@@ -340,30 +346,30 @@ export default function ProductosPage() {
       </section>
 
       {/* Sección de Filtros y Búsqueda */}
-      <section className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col sm:flex-row gap-4 items-center justify-between">
-        <div className="w-full sm:w-auto flex flex-col sm:flex-row gap-3 flex-1">
-          <div className="flex-1">
-            <label className="block text-xs font-semibold text-slate-500 mb-1">
-              Filtrar por Nombre:
+      <section className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row gap-5 items-stretch md:items-center justify-between">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1">
+          <div>
+            <label className="block text-sm font-bold text-slate-700 mb-1.5">
+              🔍 Filtrar por Nombre:
             </label>
             <input
               type="text"
               placeholder="Ej: mouse, notebook..."
               value={filtroNombre}
               onChange={(e) => setFiltroNombre(e.target.value)}
-              className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
+              className="w-full px-4 py-2.5 text-base border border-slate-300 text-slate-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white font-medium shadow-xs"
             />
           </div>
-          <div className="flex-1">
-            <label className="block text-xs font-semibold text-slate-500 mb-1">
-              Filtrar por Categoría:
+          <div>
+            <label className="block text-sm font-bold text-slate-700 mb-1.5">
+              🏷️ Filtrar por Categoría:
             </label>
             <input
               type="text"
               placeholder="Ej: perifericos, monitores..."
               value={filtroCategoria}
               onChange={(e) => setFiltroCategoria(e.target.value)}
-              className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
+              className="w-full px-4 py-2.5 text-base border border-slate-300 text-slate-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white font-medium shadow-xs"
             />
           </div>
         </div>
@@ -375,48 +381,48 @@ export default function ProductosPage() {
               setFiltroNombre("");
               setFiltroCategoria("");
             }}
-            className="text-xs text-indigo-600 hover:text-indigo-800 font-medium self-end sm:self-center cursor-pointer"
+            className="text-sm font-bold text-indigo-600 hover:text-indigo-800 bg-indigo-50 hover:bg-indigo-100 px-4 py-2.5 rounded-xl transition-colors self-start md:self-end cursor-pointer"
           >
-            Limpiar Filtros
+            ✕ Limpiar Filtros
           </button>
         )}
       </section>
 
       {/* Tabla del Listado de Productos */}
-      <section className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-        <div className="p-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
-          <h2 className="font-bold text-slate-800 text-base">
+      <section className="bg-white rounded-2xl border border-slate-200 shadow-md overflow-hidden">
+        <div className="p-5 border-b border-slate-200 bg-slate-50 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <h2 className="font-extrabold text-slate-900 text-lg sm:text-xl">
             Listado de Productos
           </h2>
-          <span className="text-xs font-medium text-slate-500">
-            {productos.length} {productos.length === 1 ? "producto encontrado" : "productos encontrados"}
+          <span className="text-sm font-semibold bg-white border border-slate-200 text-slate-700 px-3 py-1 rounded-full shadow-2xs">
+            {productos.length} {productos.length === 1 ? "producto registrado" : "productos registrados"}
           </span>
         </div>
 
         {cargando ? (
-          <div className="p-12 text-center text-slate-500">
-            <p className="animate-pulse">Cargando productos...</p>
+          <div className="p-16 text-center text-slate-500 font-medium">
+            <p className="animate-pulse text-lg">Cargando productos...</p>
           </div>
         ) : productos.length === 0 ? (
-          <div className="p-12 text-center text-slate-500 space-y-2">
-            <p className="text-base font-medium">No se encontraron productos.</p>
-            <p className="text-xs text-slate-400">
+          <div className="p-16 text-center text-slate-500 space-y-3">
+            <p className="text-xl font-bold text-slate-700">No se encontraron productos.</p>
+            <p className="text-sm text-slate-500 max-w-md mx-auto">
               {filtroNombre || filtroCategoria
                 ? "Probá cambiando los términos de búsqueda o limpiando los filtros."
                 : "Creá tu primer producto utilizando el formulario de arriba."}
             </p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto w-full">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-slate-100/75 text-slate-600 text-xs uppercase tracking-wider font-semibold border-b border-slate-200">
-                  <th className="p-3.5">Código</th>
-                  <th className="p-3.5">Nombre</th>
-                  <th className="p-3.5">Categoría</th>
-                  <th className="p-3.5 text-right">Precio</th>
-                  <th className="p-3.5 text-center">Stock</th>
-                  <th className="p-3.5 text-right">Acciones</th>
+                <tr className="bg-slate-100 text-slate-700 text-xs sm:text-sm uppercase tracking-wider font-extrabold border-b border-slate-200">
+                  <th className="p-4">Código</th>
+                  <th className="p-4">Nombre</th>
+                  <th className="p-4">Categoría</th>
+                  <th className="p-4 text-right">Precio</th>
+                  <th className="p-4 text-center">Stock</th>
+                  <th className="p-4 text-right">Acciones</th>
                 </tr>
               </thead>
               <tbody>
