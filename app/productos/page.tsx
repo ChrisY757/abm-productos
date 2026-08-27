@@ -28,6 +28,9 @@ export default function ProductosPage() {
   const [form, setForm] = useState(estadoInicialFormulario);
   const [editando, setEditando] = useState<boolean>(false);
 
+  // Estado para el modal de confirmación de eliminación
+  const [productoAEliminar, setProductoAEliminar] = useState<{ codigo: string; nombre?: string } | null>(null);
+
   // Función para cargar productos desde la API (con filtros opcionales)
   async function cargarProductos() {
     setCargando(true);
@@ -152,10 +155,19 @@ export default function ProductosPage() {
     setEditando(false);
   }
 
-  // Eliminar producto
-  async function eliminar(codigo: string) {
-    const confirmar = window.confirm(`¿Estás seguro de que deseas eliminar el producto ${codigo}?`);
-    if (!confirmar) return;
+  // Solicitar eliminación (abre el modal visual)
+  function solicitarEliminar(codigo: string) {
+    const prod = productos.find((p) => p.codigo === codigo);
+    setProductoAEliminar({
+      codigo,
+      nombre: prod ? prod.nombre : codigo,
+    });
+  }
+
+  // Ejecutar eliminación confirmada
+  async function confirmarEliminar() {
+    if (!productoAEliminar) return;
+    const codigo = productoAEliminar.codigo;
 
     try {
       const res = await fetch(`${API_URL}/${codigo}`, {
@@ -165,6 +177,7 @@ export default function ProductosPage() {
       if (!res.ok) {
         const respuesta = await res.json();
         setMensaje({ tipo: "error", texto: respuesta.error || "No se pudo eliminar el producto." });
+        setProductoAEliminar(null);
         return;
       }
 
@@ -175,10 +188,12 @@ export default function ProductosPage() {
         cancelarEdicion();
       }
 
+      setProductoAEliminar(null);
       cargarProductos();
     } catch (err) {
       console.error("Error al eliminar producto:", err);
       setMensaje({ tipo: "error", texto: "Error al intentar eliminar el producto." });
+      setProductoAEliminar(null);
     }
   }
 
@@ -431,7 +446,7 @@ export default function ProductosPage() {
                     key={producto.codigo}
                     producto={producto}
                     onEditar={editar}
-                    onEliminar={eliminar}
+                    onEliminar={solicitarEliminar}
                   />
                 ))}
               </tbody>
@@ -439,6 +454,47 @@ export default function ProductosPage() {
           </div>
         )}
       </section>
+
+      {/* Modal / Popup de Confirmación para Eliminar */}
+      {productoAEliminar && (
+        <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 animate-in fade-in">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-slate-200 transform transition-all text-center space-y-4">
+            <div className="w-16 h-16 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center text-3xl mx-auto shadow-inner">
+              🗑️
+            </div>
+
+            <div className="space-y-2">
+              <h3 className="text-2xl font-extrabold text-slate-900">
+                ¿Eliminar producto?
+              </h3>
+              <p className="text-base text-slate-600 leading-relaxed">
+                Estás a punto de eliminar el producto{" "}
+                <span className="font-bold text-slate-900 block mt-1">
+                  "{productoAEliminar.nombre}" ({productoAEliminar.codigo})
+                </span>
+                Esta acción no se puede deshacer.
+              </p>
+            </div>
+
+            <div className="flex items-center justify-center gap-3 pt-4 border-t border-slate-100">
+              <button
+                type="button"
+                onClick={() => setProductoAEliminar(null)}
+                className="flex-1 px-5 py-3 text-base font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors cursor-pointer"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                onClick={confirmarEliminar}
+                className="flex-1 px-5 py-3 text-base font-extrabold text-white bg-rose-600 hover:bg-rose-700 rounded-xl transition-all shadow-md hover:shadow-lg cursor-pointer"
+              >
+                Sí, eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

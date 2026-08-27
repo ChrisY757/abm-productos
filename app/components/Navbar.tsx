@@ -13,7 +13,7 @@ export default function Navbar() {
           </span>
         </div>
 
-        <nav className="flex items-center gap-3 sm:gap-4">
+        <nav className="flex items-center gap-2 sm:gap-4 flex-wrap justify-center">
           <Link
             href="/"
             className="text-base font-semibold text-white hover:bg-slate-800 px-4 py-2 rounded-lg transition-colors border border-transparent hover:border-slate-700"
@@ -25,6 +25,12 @@ export default function Navbar() {
             className="text-base font-semibold text-white hover:bg-slate-800 px-4 py-2 rounded-lg transition-colors border border-transparent hover:border-slate-700"
           >
             Gestión de Productos
+          </Link>
+          <Link
+            href="/estudiante"
+            className="text-base font-semibold text-white hover:bg-slate-800 px-4 py-2 rounded-lg transition-colors border border-transparent hover:border-slate-700"
+          >
+            Estudiante
           </Link>
         </nav>
       </div>
