@@ -42,7 +42,7 @@ node server.js
 ### 2. Iniciar el Frontend (Next.js)
 En una segunda terminal:
 ```bash
-cd frontEnd/abm-productos
+cd abm-productos
 npm run dev
 ```
 > Abre tu navegador en [http://localhost:3000](http://localhost:3000).
